@@ -117,7 +117,9 @@ $\tX^{(1)}$, а вторая --- $\tX^{(2)}$. Сильная разделимость означает, что для лю
 разложения это так.
 
 В ряде случаев, например, в случае слабой разделимости двух синусов с разными частотами и одинаковыми амплитудами,
-сильная разделимость отсутствует.\footnote{reference} Возникает задача построения другого оптимизационного критерия, который
+сильная разделимость отсутствует \cite{Golyandina.etal2003}. 
+
+Возникает задача построения другого оптимизационного критерия, который
 мог бы сильно разделить компоненты, не разделённые с помощью SSA, использующего оптимальные свойства сингулярного разложения.
 Метод решения этой задачи, называемый DerivSSA, был предложен в работе \cite{DerivSSA}. Метод DerivSSA меняет вклады компонент, рассматривая не только сам ряд, но и его производную.
 
@@ -199,7 +201,7 @@ $
 \end{proposition}
 
 Заметим, что определения \ref{def:sep_w} и \ref{def:sep_s} не противоречат определениям, данным в \cite[разделы 1.5 и 6.1]{Golyandina.etal2001}
-для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность двух эквивалетныхо определений слабой и сильной разделимости.
+для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность двух эквивалетных определений слабой и сильной разделимости.
 
 Класс разделимых рядов методом Basic SSA описан в \cite{Usevich2010}.
 
@@ -235,7 +237,9 @@ $
 Поэтому метод SSA-AMUSE применяется как вложенный метод, уточняющий разложение, полученное с помощью Basic SSA:
 в начале с помощью Basic SSA получаем оценку траекторной матрицы интересующего нас сигнала, потом полученную матрицу раскладываем с помощью SSA-AMUSE.
 
-Таким образом, на первом этапе мы делаем обычное сингулярное разложение $L$-траекторной матрицы $\matr{X}$. Выделяем группу неразделившихся компонент с индексами $I$, $|I|=r$. Обозначим $\matr{Y}=\left[Y_1:\ldots:Y_K\right]=\matr{X}_I$ сгруппированную матрицу этих компонент размерности $L \times K$ ранга $r$. Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$. Затем так же, как в Basic SSA, получаем ряды диагональным усреднением:
+Таким образом, на первом этапе мы делаем обычное сингулярное разложение $L$-траекторной матрицы $\matr{X}$.
+\marginpar{Здесь у нас группировка и восстановление местами переставлены как будто}
+ Выделяем группу неразделившихся компонент с индексами $I$, $|I|=r$. Обозначим $\matr{Y}=\left[Y_1:\ldots:Y_K\right]=\matr{X}_I$ сгруппированную матрицу этих компонент размерности $L \times K$ ранга $r$. Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$. Затем так же, как в Basic SSA, получаем ряды диагональным усреднением:
 $
 \wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(r)}_N,\ \  \wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_{k}.
 $
@@ -267,7 +271,7 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 \marginpar{С $\tau \leq K - r$ было бы верно только если $\matr{Y}$ траекторная ряда ранга $r$. Так верно для любой. Или поставить условие, что ранг $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$ равен r}
 
 \begin{proof}
-	Сингулярное разложение матрицы $\left[\!\lefttau{\matr{Y}}\!:\!\righttau{\matr{Y}}\!\right]$ можно записать в виде
+	Матрица $\left[\!\lefttau{\matr{Y}}\!:\!\righttau{\matr{Y}}\!\right]$ имеет ранг $r$, так как по условию включает все столбцы матрицы $\matr{Y}$. Сингулярное разложение матрицы $\left[\!\lefttau{\matr{Y}}\!:\!\righttau{\matr{Y}}\!\right]$ можно записать в виде
 	%\begin{gather*}
 		$\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]=\left[\matr{U}\matr{\Lambda}^{1/2}\T{\bracket{\matr{T}^{(1)}}}:\matr{U}\matr{\Lambda}^{1/2}\T{\bracket{\matr{T}^{(2)}}}\right],$
 	%\end{gather*}
@@ -342,12 +346,13 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
         	\matr{Y} =\sum\limits_{i=1}^{r}\matr{Y}_i, \mbox{ где } \matr{Y}_i=\hat{U}_i\:\T{S}_{i}.
         	\label{decompY}
         \end{equation}
+        \item Проводим группировку: разбиваем $\left\{ 1,\ldots,r \right\}=\bigsqcup\limits_{m=1}^{l} J_m$, считаем результирующие матрицы $\matr{Y}_{J_m}=\sum\limits_{k \in J_m}\matr{Y}_k$, получаем разложение $\matr{Y}=\matr{Y}_{J_1}+\ldots+\matr{Y}_{J_l}$.
         \item Восстанавливаем компоненты ряда:
         $
-\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(r)}_N,$ где $\wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_k.
+\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(l)}_N,$ где $\wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_{J_k}.
 $
 \end{enumerate}
-    \textbf{Результат}: разложение ряда $\wtilde\tY_N$ на сумму компонент $\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(r)}_N$.
+    \textbf{Результат}: разложение ряда $\wtilde\tY_N$ на сумму компонент $\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(l)}_N$.
 
 \section{Разделимость}
 
@@ -364,12 +369,12 @@ $
 %\subsection{Свойства подпространств}
 \subsection{Вспомогательные утверждения}
 \label{SSA_ICA_prop}
-Будем рассматривать ряды $\tX_N$, $\tX_N^{(1)}$ и $\tX_N^{(2)}$ конечного ранга, управляемые ЛРФ порядка $d$, $d_1$ и $d_2$ соответственно, и пространства строк $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ их траекторных матриц.
+Будем рассматривать ряды $\tX_N$, $\tX_N^{(1)}$ и $\tX_N^{(2)}$ конечного ранга, управляемые ЛРФ порядка $d$, $d_1$ и $d_2$ соответственно, и пространства строк $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ их траекторных матриц $\matr{X}$, $\matr{X}^{(1)}$ и $\matr{X}^{(2)}$.
 Предположим, что  $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$ и $d=d_1+d_2$.
 Докажем несколько утверждений о свойствах траекторных пространств.
 
 %Как и раньше,  пусть $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ --- пространства строк траекторных матриц рядов $\tX_N^{(1)}$, $\tX_N^{(2)}$ и $\tX_N$ %размерности, соответственно, $d_1$, $d_2$ и $d$.
- Обозначим $\righttau{{\gX}^{(K,1)}},\:\righttau{{\gX}^{(K,2)}}$ и $\righttau{{\gX}^{(K)}}$ --- пространства строк траекторных матриц без последних $\tau$ столбцов, и также $\lefttau{{\gX}^{(K,1)}}$, $\lefttau{{\gX}^{(K,2)}}$ и $\lefttau{{\gX}^{(K)}}$ --- пространства строк траекторных матриц без первых $\tau$ столбцов.
+ Обозначим $\righttau{{\gX}^{(K,1)}},\:\righttau{{\gX}^{(K,2)}}$ и $\righttau{{\gX}^{(K)}}$ --- пространства строк матриц $\righttau{\matr{X}}$, $\righttau{\matr{X}^{(1)}}$ и $\righttau{\matr{X}^{(2)}}$, и также $\lefttau{{\gX}^{(K,1)}}$, $\lefttau{{\gX}^{(K,2)}}$ и $\lefttau{{\gX}^{(K)}}$ --- пространства строк матриц $\lefttau{\matr{X}}$, $\lefttau{\matr{X}^{(1)}}$ и $\lefttau{\matr{X}^{(2)}}$.
 
 \begin{lemma}
 	\label{UpBottau_spaces}
@@ -386,7 +391,7 @@ $
 
 Докажем теперь равенство размерностей неполного и полного пространств.
 Очевидно, что $\func{dim}\bracket{\righttau{{\gX}^{(K)}}}=\func{dim}\bracket{\lefttau{{\gX}^{(K)}}}$ и $\func{\dim}\bracket{\righttau{{\gX}^{(K)}}} \leq \func{dim}\bracket{\gX^{(K)}}$.
-Рассмотрим базис $V_1,\ldots,V_d$ в $\gX^{(K)}$, составленный из $d$ линейно независимых столбцы матрицы $\matr{X}$.
+Рассмотрим базис $V_1,\ldots,V_d$ в $\gX^{(K)}$, составленный из $d$ линейно независимых столбцов матрицы $\matr{X}$.
 Соответствующие ему векторы $\bottau{{V_1}},\ldots,\bottau{{V_d}} \in \righttau{{\gX}^{(K)}}$ линейно независимы, так как иначе их можно было бы достроить по ЛРФ до
 зависимых векторов, совпадающих по однозначности с $V_1,\ldots,V_d$. Лемма доказана.
 \end{proof}
@@ -398,7 +403,7 @@ $
 \begin{lemma}
 \label{one_tau_deter_cons}
 	Пусть $\wtilde{\matr{S}}$ --- некоторая матрица ранга $d$ такая, что для фиксированного $\tau > 0$ выполняется $\matr{C}_{\tau}\brackettt{\wtilde{\matr{S}}}=\func{diag}\bracket{\mu_1,\ldots,\mu_d}$, где $\mu_1 \geq \mu_2 \geq \ldots \geq \mu_d$,
-   и $\wtilde{\matr{W}}$ --- некоторая ортогональная матрица . Обозначим $\wtilde{\matr{Q}}=\wtilde{\matr{S}}\T{\wtilde{\matr{W}}}$. Если для некоторых подмножеств $I_1 \subset \left\{ 1,\ldots, d\right\}$ и $I_2 \subset \left\{ 1,\ldots, d\right\}$ множества $\lbrace \mu_i, i \in I_1 \rbrace$ и $\lbrace \mu_j, j \in I_2 \rbrace$ не пересекаются, то для любого спектрального разложения матрицы $\matr{C}_{\tau}\brackettt{\wtilde{\matr{Q}}}=\matr{H}\matr{D}\T{\matr{H}}$ с собственными числами, упорядоченными по убыванию, выполнено
+   и $\wtilde{\matr{W}}$ --- некоторая ортогональная матрица. Обозначим $\wtilde{\matr{Q}}=\wtilde{\matr{S}}\T{\wtilde{\matr{W}}}$. Если для некоторых подмножеств $I_1 \subset \left\{ 1,\ldots, d\right\}$ и $I_2 \subset \left\{ 1,\ldots, d\right\}$ множества $\lbrace \mu_i, i \in I_1 \rbrace$ и $\lbrace \mu_j, j \in I_2 \rbrace$ не пересекаются, то для любого спектрального разложения матрицы $\matr{C}_{\tau}\brackettt{\wtilde{\matr{Q}}}=\matr{H}\matr{D}\T{\matr{H}}$ с собственными числами, упорядоченными по убыванию, выполнено
 	\begin{enumerate}
 		\item $\matr{D}=\matr{C}_{\tau}\brackettt{\wtilde{\matr{S}}}$,
 		\item $\func{span}\bracket{H_k: k \in I_1}=\func{span}\bracket{\wtilde{W}_l: l \in I_1}$ и $\func{span}\bracket{H_k: k \in I_2}=\func{span}\bracket{\wtilde{W}_l: l \in I_2}$, где $H_i$, $i=1,\ldots,d$, --- столбцы матрицы $\matr{H}$, $\wtilde{W}_j$, $j=1,\ldots,d$, --- столбцы матрицы $\wtilde{\matr{W}}$.
@@ -437,13 +442,15 @@ $
 	
 	Необходимость. В обозначениях теоремы \ref{SSA_AMUSE_decomp} существует $\matr{W}=\left[ W_1,\ldots, W_d \right]$ такая, что для $\matr{S}=\matr{Q}\matr{W}=\left[ S_1, \ldots, S_d \right]$ матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$ диагональна и базис $\left\lbrace S_1,\ldots, S_d \right\rbrace$ пространства $\gX^{(K)}$ можно разбить на подмножества $\left\lbrace S_1^{(1)},\ldots, S_{d_1}^{(1)} \right\rbrace$ и $\left\lbrace S_1^{(2)},\ldots, S_{d_2}^{(2)} \right\rbrace$ так, что первое составляет базис $\gX^{(K,1)}$, а второе --- базис $\gX^{(K,2)}$. Переупорядочим столбцы $\matr{S}$ так, что $\matr{S}^{(i)}=\left[ S_1^{(i)}:\ldots: S_{d_i}^{(i)} \right],\: i=1,2$, $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)} \right]$. Обозначим $\Xi^{(i)} = \T{\left[\!\T{\bracket{\toptau{{\matr{S}}^{(i)}}}}\!:\!\T{\bracket{\bottau{{\matr{S}}^{(i)}}}}\!\right]}$. Столбцы матрицы $\Xi^{(1)}$ ортогональны столбцам $\Xi^{(2)}$, при этом столбцы матрицы $\Xi^{(i)}$ образуют ортогональный базис строк матрицы $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]$. Отсюда следует равенство \eqref{eq:wsep1}.
 %	
-	Используя условие разделимости, можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-\frac{1}{2}}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
+	Используя определение разделимости \ref{def:sep_w},
+\marginpar{Здесь лучше "используя определение разделимости \ref{def:sep_w}", условия разделимости мы вроде как выводим}	
+	 можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-\frac{1}{2}}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
 %и поэтому $\matr{Y}^{(i)}=\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{Y}^{(i)}$.
 	Воспользовавшись этим, выведем второе условие из диагональности матрицы $\matr{C}_{\tau}\brackettt{\matr{S}}$. Матрица может быть записана в виде
 	\begin{eqnarray*}
 		\matr{C}_{\tau}\brackettt{\matr{S}} = \left(\begin{array}{cc}
 		\matr{C}_{\tau}\brackettt{\matr{S}^{(1)}} & \matr{C}^{(1,2)} \\
-		\matr{C}^{(1,2)} & \matr{C}_{\tau}\brackettt{\matr{S}^{(2)}}
+		\T{\bracket{\matr{C}^{(1,2)}}} & \matr{C}_{\tau}\brackettt{\matr{S}^{(2)}}
 	\end{array}\right),
 	\end{eqnarray*}
 	где
@@ -502,7 +509,7 @@ $
 
 \begin{proposition}
 \label{prop:sepSSAandAMUSE}
-Пусть $\tX^{(1)}$ и $\tX^{(2)}$ --- бесконечные ряды, управляемые ЛРФ порядка $d$. Если отрезки этих бесконечных рядов достаточно большой длины $N$ такой, что сдвиг $0 < \tau \leq \min \bracket{\lfloor K/2 \rfloor, K-d, \lfloor\frac{L-d}{2}\rfloor}$, \marginpar{check}
+Пусть $\tX^{(1)}$ и $\tX^{(2)}$ --- бесконечные ряды, управляемые ЛРФ порядка $d$. Если отрезки этих бесконечных рядов достаточно большой длины $N$ такой, что сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-r}{2}\rfloor, K-\tau, \lfloor\frac{K}{2}\rfloor}$, \marginpar{check}
 слабо Basic SSA разделимы при длине окна $L$, то удлинённые на $\tau$ (то есть длины $N+\tau$) отрезки ряда будут слабо SSA-AMUSE разделимы при том же $L$ и сдвиге $\tau$. Также будут слабо SSA-AMUSE разделимы неудлинённые отрезки длины $N$ при длине окна $L-\tau$ и сдвиге $\tau$.
 \end{proposition}
 
@@ -523,10 +530,10 @@ $
 \begin{enumerate}
 	\item Приведём пример того, что условие  $\lefttau{\gX^{(K,1)}} \perp \; \lefttau{\gX^{(K,2)}}$  является лишь достаточным условием слабой разделимости.
 	\label{sinsin_str_ex}
-	Рассмотрим $\tX^{(1)}=(\cos \pi n, n=1,\ldots,N)$ и $\tX^{(2)}=(\func{const}, n=1,\ldots,N)$. Если $K$ нечётно, то пространства $\lefttau{\gX^{(K,1)}}$ и $\lefttau{\gX^{(K,2)}}$ не ортогональны, однако условия \eqref{eq:wsep1} и \eqref{eq:wsep2} выполнены. Таким образом, данные ряды слабо SSA-AMUSE разделимы.
+	Рассмотрим $\tX^{(1)}=(\cos \pi n, n=1,\ldots,N)$ и $\tX^{(2)}=(\func{const}, n=1,\ldots,N)$. Если $K$ чётно, то при $\tau=1$ пространства $\lefttau{\gX^{(K,1)}}$ и $\lefttau{\gX^{(K,2)}}$ не ортогональны, однако условия \eqref{eq:wsep1} и \eqref{eq:wsep2} выполнены. Таким образом, данные ряды слабо SSA-AMUSE разделимы.
 	
 	\item Получим условия сильной разделимости двух гармоник.
-	Рассмотрим ряды $\tX^{(1)}$ и $\tX^{(2)}$ длины $N$ с общими членами в виде $x^{(i)}_n=A_i\sin \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,\ldots,N$, $0<\omega_i \leq 0.5$, $\omega_1\neq\omega_2$. Докажем, что если $(K-1)\omega_1$ и $(K-1)\omega_2$ целые, то ряды сильно SSA-AMUSE разделимы. Слабая разделимость следует из $\lefttau{\gX^{(K,1)}} \perp \lefttau{\gX^{(K,2)}}$. Сильную разделимость можно доказать  следующим образом. Пусть для определенности $\omega_i<0.5$. В этом случае найденный на шаге 3 алгоритма SSA-AMUSE базис из столбцов матрицы $\matr{S}$ можно разбить на базисы пространств $\gX^{(K,1)}$ и $\gX^{(K,2)}$ вида:
+	Рассмотрим ряды $\tX^{(1)}$ и $\tX^{(2)}$ длины $N$ с общими членами в виде $x^{(i)}_n=A_i\sin \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,\ldots,N$, $0<\omega_i \leq 0.5$, $\omega_1\neq\omega_2$. Докажем, что если $(K-1)\omega_1$ и $(K-1)\omega_2$ целые, то ряды сильно SSA-AMUSE разделимы. Слабая разделимость следует из $\lefttau{\gX^{(K,1)}} \perp \lefttau{\gX^{(K,2)}}$. Сильную разделимость можно доказать  следующим образом. Пусть для определённости $\omega_i<0.5$. В этом случае найденный на шаге 3 алгоритма SSA-AMUSE базис из столбцов матрицы $\matr{S}$ можно разбить на базисы пространств $\gX^{(K,1)}$ и $\gX^{(K,2)}$ вида:
 	\begin{gather*}
 		S_1^{(i)}=\T{\bracket{A\sin\bracket{2\pi \omega_i +\zeta_i},\ldots,A\sin\bracket{2\pi \omega_i K +\zeta_i}}},\\
 		S_2^{(i)}=\T{\bracket{A\cos\bracket{2\pi \omega_i +\zeta_i},\ldots,A\cos\bracket{2\pi \omega_i K +\zeta_i}}},
@@ -543,7 +550,7 @@ $
 \subsection{SSA-AMUSE асимптотическая разделимость}
 \label{SSA_ICA_asymp}
 
-Конечно, в реальных задачах условия точной разделимости редко выполнены и имеет место приближенная разделимость,
+Конечно, в реальных задачах условия точной разделимости редко выполнены и имеет место приближённая разделимость,
 которая является следствием наличия асимптотической разделимости.
 
 Понятие асимптотической SSA-AMUSE слабой разделимости определяется аналогично асимптотической разделимости
@@ -570,7 +577,7 @@ $
 \section{Сравнение}
 \label{Comparison}
 
-Так как оба метода, предлагаемый в статье SSA-AMUSE и введенный в \cite{DerivSSA} DerivSSA, используются для ослабления условий сильной разделимости, возникает задача их сравнения.
+Так как оба метода, предлагаемый в статье SSA-AMUSE и введённый в \cite{DerivSSA} DerivSSA, используются для ослабления условий сильной разделимости, возникает задача их сравнения.
 У методов много общего. В частности, они оба являются вложенными, т.е. используются уже после выделения сигнала из шума.
 
 \bfgh
@@ -590,81 +597,97 @@ $
 является то, что получаемое разложение не является разложением на ортогональные по Фробениусу матрицы.
 
 Тем не менее, перечисленные преимущества приводят к повышению точности разделения компонент временного ряда.
-Продемонстрируем это на численном эксперименте. На рисунке \ref{fig:comp} изображены ошибки RMSE оценки одной гармонической компоненты по наблюдаемой сумме двух синусов. Параметр $\omega_2$ меняется от 0.01 до 0.25 с шагом 0.001. Длина ряда $N=150$, длина окна $L=75$, сдвиг $\tau=1$ и в DerivSSA параметр $\gamma=10$ . Естественно, что при $\omega_2\approx \omega_1=1/7$ разделимости нет. Однако видно, что область с большой ошибкой вокруг $\omega_2=1/7\approx 0.14$  более узкая для SSA-AMUSE.
+Продемонстрируем это на численном эксперименте. На рисунке \ref{fig:comp} изображены ошибки RMSE оценки одной гармонической компоненты по наблюдаемой сумме двух синусов. Параметр $\omega_2$ меняется от 0.01 до 0.25 с шагом 0.001. Длина ряда $N=150$, длина окна $L=75$, сдвиг $\tau=1$ и в DerivSSA параметр $\gamma=10$. Естественно, что при $\omega_2\approx \omega_1=1/7$ разделимости нет. Однако видно, что область с большой ошибкой вокруг $\omega_2=1/7\approx 0.14$  более узкая для SSA-AMUSE.
 При добавлении шума к сигналу результат сравнения аналогичен.
 
-\bibliographystyle{gost2008}
+%\bibliographystyle{gost2008}
 
-\bibliography{assa3}
+%\bibliography{assa3}
 
-%\begin{thebibliography}{1}
-%\def\selectlanguageifdefined#1{
-%\expandafter\ifx\csname date#1\endcsname\relax
-%\else\selectlanguage{#1}\fi}
-%\providecommand*{\href}[2]{{\small #2}}
-%\providecommand*{\url}[1]{{\small #1}}
-%\providecommand*{\BibUrl}[1]{\url{#1}}
-%\providecommand{\BibAnnote}[1]{}
-%\providecommand*{\BibEmph}[1]{#1}
-%\ProvideTextCommandDefault{\cyrdash}{\hbox to.8em{--\hss--}}
-%\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
-%\cyrdash\hskip.2em\ignorespaces}
-%
-%\bibitem{Golyandina.etal2001}
-%\selectlanguageifdefined{english}
-%\BibEmph{Golyandina~N., Nekrutkin~V., Zhigljavsky~A.} Analysis of Time Series
-%  Structure: {SSA} and Related Techniques. \BibDash
-%\newblock Chapman\&Hall/CRC, 2001.
-%
-%\bibitem{Golyandina.Zhigljavsky2012}
-%\selectlanguageifdefined{english}
-%\BibEmph{Golyandina~N., Zhigljavsky~A.} {S}ingular {S}pectrum {A}nalysis for
-%  Time Series. Springer Briefs in Statistics. \BibDash
-%\newblock Springer, 2013.
-%
-%\bibitem{DerivSSA}
-%\selectlanguageifdefined{english}
-%\BibEmph{Golyandina~N., Shlemov~A.} Variations of singular spectrum analysis
-%  for separability improvement: non-orthogonal decompositions of time
-%  series.~// \BibEmph{Statistics and Its Interface}. \BibDash
-%\newblock 2015. \BibDash
-%\newblock Vol.~8, no.~3. \BibDash
-%\newblock P.~277--294.
-%
-%\bibitem{HyvarinenE2000}
-%\selectlanguageifdefined{english}
-%\BibEmph{Hyvarinen~A., Karhunen~J., Erkki~O.} Independent Component Analysis.
-%  \BibDash
-%\newblock John Wiley \& Sons,Inc., 2001. \BibDash
-%\newblock 320~p.
-%
-%\bibitem{Hyvarinen99}
-%\selectlanguageifdefined{english}
-%\BibEmph{Hyvarinen~A.} Fast and robust fixed-point algorithms for independent
-%  component analysis.~// \BibEmph{Neural Networks, IEEE Transactions}. \BibDash
-%\newblock 1999. \BibDash
-%\newblock Vol.~10, no.~3. \BibDash
-%\newblock P.~626--634.
-%
-%\bibitem{Tong1991}
-%\selectlanguageifdefined{english}
-%\BibEmph{Tong~L., Liu~R. et~al.} Indeterminacy and identifiability of blind
-%  identification.~// \BibEmph{IEEE Transactions on Circuits and Systems}.
-%  \BibDash
-%\newblock 1991. \BibDash
-%\newblock Vol.~38, no.~5. \BibDash
-%\newblock P.~499--509.
-%
-%\bibitem{Cardoso}
-%\selectlanguageifdefined{english}
-%\BibEmph{Belouchrani~A., {Abed-Meraim}~K. et~al.} A blind source separation
-%  technique using second order statistics.~// \BibEmph{IEEE Transactions on
-%  Signal Processing}. \BibDash
-%\newblock 1997. \BibDash
-%\newblock Vol.~45, no.~2. \BibDash
-%\newblock P.~434--444.
-%
-%\end{thebibliography}
+\begin{thebibliography}{1}
+\def\selectlanguageifdefined#1{
+\expandafter\ifx\csname date#1\endcsname\relax
+\else\selectlanguage{#1}\fi}
+\providecommand*{\href}[2]{{\small #2}}
+\providecommand*{\url}[1]{{\small #1}}
+\providecommand*{\BibUrl}[1]{\url{#1}}
+\providecommand{\BibAnnote}[1]{}
+\providecommand*{\BibEmph}[1]{#1}
+\ProvideTextCommandDefault{\cyrdash}{\hbox to.8em{--\hss--}}
+\providecommand*{\BibDash}{\ifdim\lastskip>0pt\unskip\nobreak\hskip.2em\fi
+\cyrdash\hskip.2em\ignorespaces}
+
+\bibitem{Golyandina.etal2001}
+\selectlanguageifdefined{english}
+\BibEmph{Golyandina~N., Nekrutkin~V., Zhigljavsky~A.} Analysis of Time Series
+  Structure: {SSA} and Related Techniques. \BibDash
+\newblock Chapman\&Hall/CRC, 2001.
+
+\bibitem{Golyandina.Zhigljavsky2012}
+\selectlanguageifdefined{english}
+\BibEmph{Golyandina~N., Zhigljavsky~A.} {S}ingular {S}pectrum {A}nalysis for
+  Time Series. Springer Briefs in Statistics. \BibDash
+\newblock Springer, 2013.
+
+\bibitem{Golyandina.etal2003}
+\selectlanguageifdefined{russian}
+\BibEmph{Голяндина~Н., Некруткин~В., Степанов~Д.}. Варианты метода ``Гусеница''-SSA для анализа многомерных
+  временных рядов~// Труды II Международной конференции ``Идентификация систем и задачи управления'' SICPRO'03. Москва. \BibDash
+\newblock 2003. \BibDash
+\newblock P.~2139--2168.
+
+\bibitem{DerivSSA}
+\selectlanguageifdefined{english}
+\BibEmph{Golyandina~N., Shlemov~A.} Variations of singular spectrum analysis
+  for separability improvement: non-orthogonal decompositions of time
+  series.~// \BibEmph{Statistics and Its Interface}. \BibDash
+\newblock 2015. \BibDash
+\newblock Vol.~8, no.~3. \BibDash
+\newblock P.~277--294.
+
+\bibitem{HyvarinenE2000}
+\selectlanguageifdefined{english}
+\BibEmph{Hyvarinen~A., Karhunen~J., Erkki~O.} Independent Component Analysis.
+  \BibDash
+\newblock John Wiley \& Sons,Inc., 2001. \BibDash
+\newblock 320~p.
+
+\bibitem{Hyvarinen99}
+\selectlanguageifdefined{english}
+\BibEmph{Hyvarinen~A.} Fast and robust fixed-point algorithms for independent
+  component analysis.~// \BibEmph{Neural Networks, IEEE Transactions}. \BibDash
+\newblock 1999. \BibDash
+\newblock Vol.~10, no.~3. \BibDash
+\newblock P.~626--634.
+
+\bibitem{Tong1991}
+\selectlanguageifdefined{english}
+\BibEmph{Tong~L., Liu~R. et~al.} Indeterminacy and identifiability of blind
+  identification.~// \BibEmph{IEEE Transactions on Circuits and Systems}.
+  \BibDash
+\newblock 1991. \BibDash
+\newblock Vol.~38, no.~5. \BibDash
+\newblock P.~499--509.
+
+\bibitem{Cardoso}
+\selectlanguageifdefined{english}
+\BibEmph{Belouchrani~A., {Abed-Meraim}~K. et~al.} A blind source separation
+  technique using second order statistics.~// \BibEmph{IEEE Transactions on
+  Signal Processing}. \BibDash
+\newblock 1997. \BibDash
+\newblock Vol.~45, no.~2. \BibDash
+\newblock P.~434--444.
+
+\bibitem{Usevich2010}
+\selectlanguageifdefined{english}
+\BibEmph{Usevich~K.} On signal and extraneous roots in {Singular Spectrum
+  Analysis}~// \BibEmph{Stat. Interface}. \BibDash
+\newblock 2010. \BibDash
+\newblock Vol.~3, no.~3. \BibDash
+\newblock P.~281--295.
+
+
+\end{thebibliography}
 \end{document}
 
 
