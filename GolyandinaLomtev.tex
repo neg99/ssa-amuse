@@ -84,7 +84,7 @@
 \begin{document}
     \begin{center}
       {\Large Улучшение разделимости временных рядов в анализе сингулярного спектра с помощью одного метода анализа независимых компонент}\\[0.5cm]
-      {Голяндина Н.Э.\footnote{Работа поддержана грантом РФФИ номер 15-04-06480}, Ломтев М.А.}\\[0.4cm]
+      {Голяндина Н.Э.\footnote{Работа частично поддержана грантом РФФИ номер 15-04-06480}, Ломтев М.А.}\\[0.4cm]
       УДК 519.246.8+519.254
     \end{center}
 
@@ -117,7 +117,7 @@ $\tX^{(1)}$, а вторая --- $\tX^{(2)}$. Сильная разделимость означает, что для лю
 разложения это так.
 
 В ряде случаев, например, в случае слабой разделимости двух синусов с разными частотами и одинаковыми амплитудами,
-сильная разделимость отсутствует \cite{Golyandina.etal2003}. 
+сильная разделимость отсутствует \cite{Golyandina.etal2003}.
 
 Возникает задача построения другого оптимизационного критерия, который
 мог бы сильно разделить компоненты, не разделённые с помощью SSA, использующего оптимальные свойства сингулярного разложения.
@@ -201,7 +201,7 @@ $
 \end{proposition}
 
 Заметим, что определения \ref{def:sep_w} и \ref{def:sep_s} не противоречат определениям, данным в \cite[разделы 1.5 и 6.1]{Golyandina.etal2001}
-для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность двух эквивалетных определений слабой и сильной разделимости.
+для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность для двух эквивалетных определений слабой и сильной разделимости.
 
 Класс разделимых рядов методом Basic SSA описан в \cite{Usevich2010}.
 
@@ -255,7 +255,7 @@ $
 Положим
 	\begin{gather}
 	\label{C_tau}
-\matr{C}_{\tau}\brackettt{\matr{B}} = \frac{1}{2}\left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right].
+\matr{C}_{\tau}\brackettt{\matr{B}} = \frac{1}{2}\left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right]\in \cM_{B,B}.
 	\end{gather}
 
 \subsection{Вспомогательные утверждения}
@@ -267,8 +267,6 @@ $
 где $\matr{\Lambda}\in \cM_{r,r}$ --- диагональная матрица с сингулярными числами на диагонали,
 $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \cM_{2K-2\tau,r}$ --- матрица правых сингулярных векторов, тогда $\matr{T}=\left[\toptau{\matr{Q}}:\bottau{\matr{Q}}\right]$, где $\matr{Q}=\T{\matr{Y}}\matr{U}{\matr{\Lambda}}^{-1/2}$.
 \end{lemma}
-
-\marginpar{С $\tau \leq K - r$ было бы верно только если $\matr{Y}$ траекторная ряда ранга $r$. Так верно для любой. Или поставить условие, что ранг $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$ равен r}
 
 \begin{proof}
 	Матрица $\left[\!\lefttau{\matr{Y}}\!:\!\righttau{\matr{Y}}\!\right]$ имеет ранг $r$, так как по условию включает все столбцы матрицы $\matr{Y}$. Сингулярное разложение матрицы $\left[\!\lefttau{\matr{Y}}\!:\!\righttau{\matr{Y}}\!\right]$ можно записать в виде
@@ -331,7 +329,7 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 \medskip
 \textbf{Алгоритм SSA-AMUSE}
 
-\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-r}{2}\rfloor, K-\tau, \lfloor\frac{K}{2}\rfloor}$.
+\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-r}{2}\rfloor, K-r, \lfloor\frac{K}{2}\rfloor}$.
 \begin{enumerate}
     	\item Построим сингулярное разложение матрицы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$, которое по лемме \ref{svd_YY_} имеет вид
     		$
@@ -396,7 +394,7 @@ $
 зависимых векторов, совпадающих по однозначности с $V_1,\ldots,V_d$. Лемма доказана.
 \end{proof}
 
-\marginpar{поправил. Если в условиях леммы \ref{UpBottau_spaces} в лемме \ref{svd_YY_} строки матрицы $\matr{Y}$ лежат в $\gX^{(K)}$, то лемма \ref{svd_YY_} выполняется.}
+\marginpar{Лемма \ref{UpBottau_spaces} налагает дополнительные ограничения $\tau \leq \lfloor\frac{L-r}{2}\rfloor$ и $\tau \leq K-r$ на $\tau$ и ранг $r$ в алгоритме}
 
 Приведём еще одну лемму, которая будет использована в выводе условий сильной SSA-AMUSE разделимости.
 
@@ -442,8 +440,7 @@ $
 	
 	Необходимость. В обозначениях теоремы \ref{SSA_AMUSE_decomp} существует $\matr{W}=\left[ W_1,\ldots, W_d \right]$ такая, что для $\matr{S}=\matr{Q}\matr{W}=\left[ S_1, \ldots, S_d \right]$ матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$ диагональна и базис $\left\lbrace S_1,\ldots, S_d \right\rbrace$ пространства $\gX^{(K)}$ можно разбить на подмножества $\left\lbrace S_1^{(1)},\ldots, S_{d_1}^{(1)} \right\rbrace$ и $\left\lbrace S_1^{(2)},\ldots, S_{d_2}^{(2)} \right\rbrace$ так, что первое составляет базис $\gX^{(K,1)}$, а второе --- базис $\gX^{(K,2)}$. Переупорядочим столбцы $\matr{S}$ так, что $\matr{S}^{(i)}=\left[ S_1^{(i)}:\ldots: S_{d_i}^{(i)} \right],\: i=1,2$, $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)} \right]$. Обозначим $\Xi^{(i)} = \T{\left[\!\T{\bracket{\toptau{{\matr{S}}^{(i)}}}}\!:\!\T{\bracket{\bottau{{\matr{S}}^{(i)}}}}\!\right]}$. Столбцы матрицы $\Xi^{(1)}$ ортогональны столбцам $\Xi^{(2)}$, при этом столбцы матрицы $\Xi^{(i)}$ образуют ортогональный базис строк матрицы $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]$. Отсюда следует равенство \eqref{eq:wsep1}.
 %	
-	Используя определение разделимости \ref{def:sep_w},
-\marginpar{Здесь лучше "используя определение разделимости \ref{def:sep_w}", условия разделимости мы вроде как выводим}	
+	Используя определение~\ref{def:sep_w} разделимости,
 	 можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-\frac{1}{2}}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
 %и поэтому $\matr{Y}^{(i)}=\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{Y}^{(i)}$.
 	Воспользовавшись этим, выведем второе условие из диагональности матрицы $\matr{C}_{\tau}\brackettt{\matr{S}}$. Матрица может быть записана в виде
@@ -486,8 +483,6 @@ $
     		\end{gather}
 как в лемме \ref{svd_YY_}.
 
-\marginpar{Новый вариант оформления}
-
 \begin{theorem}
 \label{strong_separ}
 	Пусть ряды $\tX^{(1)}_N$ и $\tX^{(2)}_N$ слабо SSA-AMUSE разделимы, $\matr{Y}^{(1)}$ и $\matr{Y}^{(2)}$ --- их траекторные матрицы,
@@ -509,7 +504,7 @@ $
 
 \begin{proposition}
 \label{prop:sepSSAandAMUSE}
-Пусть $\tX^{(1)}$ и $\tX^{(2)}$ --- бесконечные ряды, управляемые ЛРФ порядка $d$. Если отрезки этих бесконечных рядов достаточно большой длины $N$ такой, что сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-r}{2}\rfloor, K-\tau, \lfloor\frac{K}{2}\rfloor}$, \marginpar{check}
+Пусть $\tX^{(1)}$ и $\tX^{(2)}$ --- бесконечные ряды, управляемые ЛРФ порядка $d$. Если отрезки этих бесконечных рядов достаточно большой длины $N$ такой, что сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-d}{2}\rfloor, K-d, \lfloor\frac{K}{2}\rfloor}$, \marginpar{check}
 слабо Basic SSA разделимы при длине окна $L$, то удлинённые на $\tau$ (то есть длины $N+\tau$) отрезки ряда будут слабо SSA-AMUSE разделимы при том же $L$ и сдвиге $\tau$. Также будут слабо SSA-AMUSE разделимы неудлинённые отрезки длины $N$ при длине окна $L-\tau$ и сдвиге $\tau$.
 \end{proposition}
 
