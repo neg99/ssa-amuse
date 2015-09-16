@@ -324,12 +324,12 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 Как уже говорилось, алгоритм SSA-AMUSE строит разложение некоторой сгруппированной матрицы $\matr{Y}=\matr{X}_I$, которая была
 получена на шаге Разложение метода Basic SSA и которая является приближением ранга $r$ траекторной матрицей ряда $\wtilde\tY_N = \calT^{-1} \calH \matr{Y}$. Алгоритм устроен следующим образом.
 
-\marginpar{Если $L \leq K$, то условие на $0 < \tau \leq \lfloor\frac{L-r}{2}\rfloor$}
+
 
 \medskip
 \textbf{Алгоритм SSA-AMUSE}
 
-\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-r}{2}\rfloor, K-r, \lfloor\frac{K}{2}\rfloor}$.
+\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $0 < \tau \leq \lfloor\frac{K}{2}\rfloor$.
 \begin{enumerate}
     	\item Построим сингулярное разложение матрицы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$, которое по лемме \ref{svd_YY_} имеет вид
     		$
@@ -371,12 +371,14 @@ $
 Предположим, что  $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$ и $d=d_1+d_2$.
 Докажем несколько утверждений о свойствах траекторных пространств.
 
+\marginpar{Стоит ли явно указать, что ЛРФ минимальная}
+
 %Как и раньше,  пусть $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ --- пространства строк траекторных матриц рядов $\tX_N^{(1)}$, $\tX_N^{(2)}$ и $\tX_N$ %размерности, соответственно, $d_1$, $d_2$ и $d$.
  Обозначим $\righttau{{\gX}^{(K,1)}},\:\righttau{{\gX}^{(K,2)}}$ и $\righttau{{\gX}^{(K)}}$ --- пространства строк матриц $\righttau{\matr{X}}$, $\righttau{\matr{X}^{(1)}}$ и $\righttau{\matr{X}^{(2)}}$, и также $\lefttau{{\gX}^{(K,1)}}$, $\lefttau{{\gX}^{(K,2)}}$ и $\lefttau{{\gX}^{(K)}}$ --- пространства строк матриц $\lefttau{\matr{X}}$, $\lefttau{\matr{X}^{(1)}}$ и $\lefttau{\matr{X}^{(2)}}$.
 
 \begin{lemma}
 	\label{UpBottau_spaces}
-	Если ряд $\tX_N$ управляется ЛРФ порядка $d$, $d \leq \min\bracket{K - \tau,L - 2\tau}$, то
+	Если ряд $\tX_N$ управляется ЛРФ порядка $d$, $\tau \leq \min\bracket{K - d, \lfloor \frac{L - d}{2} \rfloor}$, то
 	$
 		\righttau{{\gX}^{(K)}}\!=\!\lefttau{{\gX}^{(K)}}.
 	$
@@ -394,7 +396,7 @@ $
 зависимых векторов, совпадающих по однозначности с $V_1,\ldots,V_d$. Лемма доказана.
 \end{proof}
 
-\marginpar{Лемма \ref{UpBottau_spaces} налагает дополнительные ограничения $\tau \leq \lfloor\frac{L-r}{2}\rfloor$ и $\tau \leq K-r$ на $\tau$ и ранг $r$ в алгоритме}
+
 
 Приведём еще одну лемму, которая будет использована в выводе условий сильной SSA-AMUSE разделимости.
 
@@ -416,7 +418,9 @@ $
 \subsection{Условия разделимости}
 \label{SSA_ICA_sep_cond}
 
-Пусть $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$, $\matr{Y}^{(1)}$ и $\matr{Y}^{(2)}$ --- траекторные матрицы рядов $\tX_N^{(1)}$ и $\tX_N^{(2)}$.
+Пусть $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$, $\matr{Y}^{(1)}$ и $\matr{Y}^{(2)}$ --- траекторные матрицы рядов $\tX_N^{(1)}$ и $\tX_N^{(2)}$, $\tau \leq \min\bracket{\lfloor \frac{K}{2} \rfloor ,K - d, \lfloor \frac{L - d}{2} \rfloor}$.
+
+\marginpar{добавил условие на $\tau$}
 
 Несложно увидеть, что если пространства строк $\lefttau{\gX^{(K,1)}}$ и $\lefttau{\gX^{(K,2)}}$  матриц $\lefttau{{\matr{Y}^{(1)}}}$ и $\lefttau{{\matr{Y}^{(2)}}}$ ортогональны, то ряды $\tX_N^{(1)}$ и $\tX_N^{(2)}$ слабо SSA-AMUSE разделимы. Получим необходимые и достаточные условия SSA-AMUSE разделимости.
 
@@ -433,7 +437,7 @@ $
 
 \end{theorem}
 
-\marginpar{Новый вариант док-ва}
+
 
 \begin{proof}
 	Приведём схему доказательства.
