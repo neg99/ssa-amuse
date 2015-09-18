@@ -201,15 +201,17 @@ $
 \end{proposition}
 
 Заметим, что определения \ref{def:sep_w} и \ref{def:sep_s} не противоречат определениям, данным в \cite[разделы 1.5 и 6.1]{Golyandina.etal2001}
-для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность для двух эквивалетных определений слабой и сильной разделимости.
+для разделимости методом Basic SSA, так как утверждения \ref{prop:sep_w} и \ref{prop:sep_s} дают возможность для двух эквивалентных определений слабой и сильной разделимости.
 
 Класс разделимых рядов методом Basic SSA описан в \cite{Usevich2010}.
 
 \subsection{Ряды конечного ранга. ЛРФ}
 Дадим определение ряда конечного ранга и ряда, управляемого линейной рекуррентной формулой (ЛРФ) \cite[глава 5]{Golyandina.etal2001}.
 
+\marginpar{В \cite[глава 5]{Golyandina.etal2001} $L \geq d$ и $d \leq \min \bracket{L,K}$}
+
 \begin{definition}
-	Ряд $\tX_N$ называется рядом конечного ранга $d \leq \min\bracket{L,K}$, если его $L$-траекторная матрица имеет ранг $d$ при любом $L \geq d$.
+	Ряд $\tX_N$ называется рядом конечного ранга $d < N/2$, если его $L$-траекторная матрица имеет ранг $d$ при любом $L \geq d$ таком, что $d \leq \min \bracket{L,K}$.
 \end{definition}
 \begin{definition}
 	Ряд $\tX_N$ называется рядом, управляемым линейной рекуррентной формулой (ЛРФ) порядка $t$, $1 \leq t \leq N-1$, если существуют $a_1,\ldots,a_t$, $a_t \neq 0$, такие что
@@ -238,7 +240,9 @@ $
 в начале с помощью Basic SSA получаем оценку траекторной матрицы интересующего нас сигнала, потом полученную матрицу раскладываем с помощью SSA-AMUSE.
 
 Таким образом, на первом этапе мы делаем обычное сингулярное разложение $L$-траекторной матрицы $\matr{X}$.
- Выделяем группу неразделившихся компонент с индексами $I$, $|I|=r$. Обозначим $\matr{Y}=\left[Y_1:\ldots:Y_K\right]=\matr{X}_I$ сгруппированную матрицу этих компонент размерности $L \times K$ ранга $r$. Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$. 
+ Выделяем группу неразделившихся компонент с индексами $I$, $|I|=r$. Обозначим $\matr{Y}=\matr{X}_I$ сгруппированную матрицу этих компонент размерности $L \times K$ ранга $r$.
+\marginpar{Убрал столбцы $Y_k$. Они далее не встречаются} 
+  Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$. 
  После группировки согласно разбиению $I=\bigsqcup\limits_{k=1}^l J_k$ и диагонального усреднения, так же, как в Basic SSA, получаем разложение
 $
 \wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(l)}_N,\ \  \wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_{J_k}.
@@ -249,20 +253,22 @@ $
 В разделе \ref{sec:support}  приведём вспомогательные утверждения, необходимые для обоснования алгоритма, сформулированного в разделе \ref{sec:alg}.
 Введём обозначение, которое является ключевым для алгоритма и связывает его с методом AMUSE анализа независимых компонент.
 
-Пусть $\matr{B}$ --- произвольная матрица из $\cM_{A,B}$ и $\tau$ --- некоторое положительное целое число. Обозначим $\toptau{\matr{B}}$ матрицу $\matr{B}$ без первых $\tau$ строк, $\bottau{\matr{B}}$ матрицу $\matr{B}$ без последних $\tau$ строк, $\lefttau{\matr{B}}$ матрицу $\matr{B}$ без первых $\tau$ столбцов, $\righttau{\matr{B}}$ матрицу $\matr{B}$ без последних $\tau$ столбцов при $0 < \tau < A,\: 0 < \tau < B$.
+Пусть $\matr{B}$ --- произвольная матрица из $\cM_{A,B}$ и $\tau$ --- некоторое положительное целое число, $\tau < \min\bracket{A,B}$. Обозначим $\toptau{\matr{B}}$ матрицу $\matr{B}$ без первых $\tau$ строк, $\bottau{\matr{B}}$ матрицу $\matr{B}$ без последних $\tau$ строк, $\lefttau{\matr{B}}$ матрицу $\matr{B}$ без первых $\tau$ столбцов, $\righttau{\matr{B}}$ матрицу $\matr{B}$ без последних $\tau$ столбцов.
 
 Положим
 	\begin{gather}
 	\label{C_tau}
-\matr{C}_{\tau}\brackettt{\matr{B}} = \frac{1}{2}\left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right]\in \cM_{B,B}.
+\matr{C}_{\tau}\brackettt{\matr{B}} = \left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right]\! \big/ 2\: \in \cM_{B,B}.
 	\end{gather}
+
+\marginpar{Наверное лучше привести все $\frac{x}{y}$ к виду $x/y$ для единого стиля}
 
 \subsection{Вспомогательные утверждения}
 \label{sec:support}
 				
 \begin{lemma}
 \label{svd_YY_}
-	Пусть $\matr{Y} \in \cM_{L,K}$, $\func{rank}\matr{Y}=r$, $\tau \leq \lfloor\frac{K}{2}\rfloor$. Рассмотрим некоторое сингулярное разложение матрицы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]=\matr{U}\matr{\Lambda}^{1/2}\T{\matr{T}}$,
+	Пусть $\matr{Y} \in \cM_{L,K}$, $\func{rank}\matr{Y}=r$, $\tau \leq K/2$. Рассмотрим некоторое сингулярное разложение матрицы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]=\matr{U}\matr{\Lambda}^{1/2}\T{\matr{T}}$,
 где $\matr{\Lambda}\in \cM_{r,r}$ --- диагональная матрица с сингулярными числами на диагонали,
 $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \cM_{2K-2\tau,r}$ --- матрица правых сингулярных векторов, тогда $\matr{T}=\left[\toptau{\matr{Q}}:\bottau{\matr{Q}}\right]$, где $\matr{Q}=\T{\matr{Y}}\matr{U}{\matr{\Lambda}}^{-1/2}$.
 \end{lemma}
@@ -305,7 +311,7 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 
 \begin{theorem}
 \label{SSA_AMUSE_decomp}
-Пусть $\matr{Y}, \matr{Q}, \matr{\Lambda}, \matr{U}$ определены в лемме \ref{svd_YY_}, а $\matr{W}$ и $\matr{S}=[S_1:\ldots:S_r]$ определены в лемме \ref{C_S_diag}. Тогда $\matr{Y}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
+Пусть $\matr{Y}, \matr{Q}, \matr{\Lambda}, \matr{U}, r$ определены в лемме \ref{svd_YY_} и $\tau\! \leq\! K/2$, а $\matr{W}$ и $\matr{S}=[S_1:\ldots:S_r]$ определены в лемме \ref{C_S_diag}. Тогда $\matr{Y}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
 %, $\matr{W}$ из спектрального разложения $\matr{C}_{\tau}\brackettt{\matr{Q}}=\matr{W}\matr{D}\T{\matr{W}}$, $\matr{Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}$, $\matr{U}$ --- левые сингулярные векторы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$
 \end{theorem}
 \begin{proof}
@@ -328,12 +334,12 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 \medskip
 \textbf{Алгоритм SSA-AMUSE}
 
-\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $0 < \tau \leq \lfloor\frac{K}{2}\rfloor$.
+\textbf{Вход}: Матрица $\matr{Y}$ размера $L \times K$ ранга $r$, сдвиг $\tau \leq K/2$.
 \begin{enumerate}
     	\item Построим сингулярное разложение матрицы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$, которое по лемме \ref{svd_YY_} имеет вид
     		$
     			\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]=
-    				\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{{\bottau{\matr{Q}}}}\right], \mbox{ где } \matr{\Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}.$
+    				\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{\bracket{\bottau{\matr{Q}}}}\right], \mbox{ где } \matr{\Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}.$
     				
     	    \item Получаем $\matr{W}=\left[W_1:\ldots:W_r \right]$, где $W_i$, $i=1,\ldots,r$, --- собственные векторы матрицы $\matr{C}_{\tau}\brackettt{\matr{\Q}}$.
         \item Вычисляем $\matr{S} = \left[S_1: \ldots :S_r\right]= \matr{\Q}\matr{W}$.
@@ -375,21 +381,21 @@ $
 
 \begin{lemma}
 	\label{UpBottau_spaces}
-	Если ряд $\tX_N$ управляется минимальной ЛРФ порядка $d$, $\tau \leq \min\bracket{K - d, \lfloor \frac{L - d}{2} \rfloor}$, то
+	Если ряд $\tX_N$ управляется минимальной ЛРФ порядка $d < N/2$, $\tau \leq \min\!\bracket{K - d, \bracket{L - d}/{2}}$, то
 	$
 		\righttau{{\gX}^{(K)}}\!=\!\lefttau{{\gX}^{(K)}}.
 	$
-При этом $\func{\dim}\bracket{\righttau{{\gX}^{(K)}}}=\func{dim}\bracket{\lefttau{{\gX}^{(K)}}}=\func{dim}\bracket{\gX^{(K)}}=d$.
+При этом $\func{\dim}\bracket{\righttau{{\gX}^{(K)}}}\!=\!\func{dim}\bracket{\lefttau{{\gX}^{(K)}}}\!=\!\func{dim}\bracket{\gX^{(K)}}=d$.
 \end{lemma}
 \begin{proof}
 	
-	Так как в матрице $\righttau{\matr{X}}$ строки с $\tau+1$ по $L$ совпадают со строками с первой по $L-\tau$ матрицы $\lefttau{\matr{X}}$, то для доказательства равенства подпространств остаётся показать, что строки с первой по $\tau$ матрицы $\righttau{\matr{X}}$ принадлежат пространству $\lefttau{{\gX}^{(K)}}$ и строки с $L-\tau+1$ по $L$ принадлежат $\righttau{{\gX}^{(K)}}$. Действительно, это так, так как ряд управляется ЛРФ и указанные строки являются линейными комбинациями совпадающих строк.
+	Так как в матрице $\righttau{\matr{X}}$ строки с $\tau+1$ по $L$ совпадают со строками с первой по $L-\tau$ матрицы $\lefttau{\matr{X}}$, то для доказательства равенства подпространств остаётся показать, что строки с первой по $\tau$ матрицы $\righttau{\matr{X}}$ принадлежат пространству $\lefttau{{\gX}^{(K)}}$ и строки с $L-\tau+1$ по $L$ принадлежат $\righttau{{\gX}^{(K)}}$. Действительно, это так, так как ряд управляется ЛРФ порядка $d \leq L-2\tau$, и указанные строки являются линейными комбинациями совпадающих строк.
 
 
 Докажем теперь равенство размерностей неполного и полного пространств.
 Очевидно, что $\func{dim}\bracket{\righttau{{\gX}^{(K)}}}=\func{dim}\bracket{\lefttau{{\gX}^{(K)}}}$ и $\func{\dim}\bracket{\righttau{{\gX}^{(K)}}} \leq \func{dim}\bracket{\gX^{(K)}}$.
 Рассмотрим базис $V_1,\ldots,V_d$ в $\gX^{(K)}$, составленный из $d$ линейно независимых столбцов матрицы $\matr{X}$.
-Соответствующие ему векторы $\bottau{{V_1}},\ldots,\bottau{{V_d}} \in \righttau{{\gX}^{(K)}}$ линейно независимы, так как иначе их можно было бы достроить по ЛРФ до
+Соответствующие ему векторы $\bottau{{V_1}},\ldots,\bottau{{V_d}} \in \righttau{{\gX}^{(K)}}$ линейно независимы, так как иначе их можно было бы достроить по ЛРФ порядка $d \leq K-\tau$ до
 зависимых векторов, совпадающих по однозначности с $V_1,\ldots,V_d$. Лемма доказана.
 \end{proof}
 
@@ -415,7 +421,7 @@ $
 \subsection{Условия разделимости}
 \label{SSA_ICA_sep_cond}
 
-Пусть $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$, $\matr{Y}^{(1)}$ и $\matr{Y}^{(2)}$ --- траекторные матрицы рядов $\tX_N^{(1)}$ и $\tX_N^{(2)}$, $\tau \leq \min\bracket{\lfloor \frac{K}{2} \rfloor ,K - d, \lfloor \frac{L - d}{2} \rfloor}$.
+Пусть $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$, $\matr{Y}^{(1)}$ и $\matr{Y}^{(2)}$ --- траекторные матрицы рядов $\tX_N^{(1)}$ и $\tX_N^{(2)}$. В дальнейшем будем считать, что неравенство $\tau \leq \min\bracket{ K/2, K - d, \bracket{L - d}\!/{2}}$ выполнено.
 
 Несложно увидеть, что если пространства строк $\lefttau{\gX^{(K,1)}}$ и $\lefttau{\gX^{(K,2)}}$  матриц $\lefttau{{\matr{Y}^{(1)}}}$ и $\lefttau{{\matr{Y}^{(2)}}}$ ортогональны, то ряды $\tX_N^{(1)}$ и $\tX_N^{(2)}$ слабо SSA-AMUSE разделимы. Получим необходимые и достаточные условия SSA-AMUSE разделимости.
 
@@ -437,10 +443,10 @@ $
 \begin{proof}
 	Приведём схему доказательства.
 	
-	Необходимость. В обозначениях теоремы \ref{SSA_AMUSE_decomp} существует $\matr{W}=\left[ W_1,\ldots, W_d \right]$ такая, что для $\matr{S}=\matr{Q}\matr{W}=\left[ S_1, \ldots, S_d \right]$ матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$ диагональна и базис $\left\lbrace S_1,\ldots, S_d \right\rbrace$ пространства $\gX^{(K)}$ можно разбить на подмножества $\left\lbrace S_1^{(1)},\ldots, S_{d_1}^{(1)} \right\rbrace$ и $\left\lbrace S_1^{(2)},\ldots, S_{d_2}^{(2)} \right\rbrace$ так, что первое составляет базис $\gX^{(K,1)}$, а второе --- базис $\gX^{(K,2)}$. Переупорядочим столбцы $\matr{S}$ так, что $\matr{S}^{(i)}=\left[ S_1^{(i)}:\ldots: S_{d_i}^{(i)} \right],\: i=1,2$, $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)} \right]$. Обозначим $\Xi^{(i)} = \T{\left[\!\T{\bracket{\toptau{{\matr{S}}^{(i)}}}}\!:\!\T{\bracket{\bottau{{\matr{S}}^{(i)}}}}\!\right]}$. Столбцы матрицы $\Xi^{(1)}$ ортогональны столбцам $\Xi^{(2)}$, при этом столбцы матрицы $\Xi^{(i)}$ образуют ортогональный базис строк матрицы $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]$. Отсюда следует равенство \eqref{eq:wsep1}.
+	Необходимость. В обозначениях теоремы \ref{SSA_AMUSE_decomp} существует $\matr{W}=\left[ W_1,\ldots, W_d \right]$ такая, что для $\matr{S}=\matr{Q}\matr{W}=\left[ S_1, \ldots, S_d \right]$ матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$ диагональна и базис $\left\lbrace S_1,\ldots, S_d \right\rbrace$ пространства $\gX^{(K)}$ можно разбить на подмножества $\left\lbrace S_1^{(1)},\ldots, S_{d_1}^{(1)} \right\rbrace$ и $\left\lbrace S_1^{(2)},\ldots, S_{d_2}^{(2)} \right\rbrace$ так, что первое составляет базис $\gX^{(K,1)}$, а второе --- базис $\gX^{(K,2)}$. Переупорядочим столбцы $\matr{S}$ так, что $\matr{S}^{(i)}=\left[ S_1^{(i)}:\ldots: S_{d_i}^{(i)} \right],\: i=1,2$, $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)} \right]$. Обозначим $\boldsymbol\Xi^{(i)} = \T{\left[\!\T{\bracket{\toptau{{\matr{S}}^{(i)}}}}\!:\!\T{\bracket{\bottau{{\matr{S}}^{(i)}}}}\!\right]}$. Столбцы матрицы $\boldsymbol\Xi^{(1)}$ ортогональны столбцам $\boldsymbol\Xi^{(2)}$, при этом столбцы матрицы $\boldsymbol\Xi^{(i)}$ образуют ортогональный базис строк матрицы $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]$. Отсюда следует равенство \eqref{eq:wsep1}.
 %	
 	Используя определение~\ref{def:sep_w} разделимости,
-	 можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-\frac{1}{2}}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
+	 можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-1/2}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
 %и поэтому $\matr{Y}^{(i)}=\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{Y}^{(i)}$.
 	Воспользовавшись этим, выведем второе условие из диагональности матрицы $\matr{C}_{\tau}\brackettt{\matr{S}}$. Матрица может быть записана в виде
 	\begin{eqnarray*}
@@ -454,11 +460,11 @@ $
 \lefttau{{\matr{Y}}^{(1)}}\T{\bracket{\righttau{{\matr{Y}}^{(2)}}}}\right]\matr{U}\!\matr{\Lambda}^{-1/2}\matr{W}^{(2)}/2$ и равно нулю по условию диагональности.
 	Домножим выражение для $\matr{C}^{(1,2)}$ справа на $\T{\bracket{\matr{W}^{(i)}}}\matr{\Lambda}^{-1/2}\T{\matr{U}}$ и слева на $\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}$, воспользуемся свойствами проекторов $\matr{P}^{(i)}$ и получим условие \eqref{eq:wsep2}.
 	
-	Достаточность. По условию \eqref{eq:wsep1} и лемме \ref{svd_YY_} существуют матрицы  $\matr{S}^{(1)}$ и $\matr{S}^{(2)}$, чьи столбцы образуют базисы $\gX^{(K,1)}$ и $\gX^{(K,2)}$, причём столбцы матрицы $\Xi^{(1)}$ ортогональны друг другу и столбцам $\Xi^{(2)}$ (матрицы $\Xi^{(i)}$ определяются так же,
+	Достаточность. По условию \eqref{eq:wsep1} и лемме \ref{svd_YY_} существуют матрицы  $\matr{S}^{(1)}$ и $\matr{S}^{(2)}$, чьи столбцы образуют базисы $\gX^{(K,1)}$ и $\gX^{(K,2)}$, причём столбцы матрицы $\boldsymbol\Xi^{(1)}$ ортогональны друг другу и столбцам $\boldsymbol\Xi^{(2)}$ (матрицы $\boldsymbol\Xi^{(i)}$ определяются так же,
 как при доказательстве необходимости).
 Отсюда можно вывести, что столбцы матрицы $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)}\right]$ образуют базис $\gX^{(K)}$.	
 	Из условия \eqref{eq:wsep2} следует, что матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$
-	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\Xi^{(i)}\T{\bracket{\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\Xi^{(i)}}}$. Откуда по теореме \ref{SSA_AMUSE_decomp} $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
+	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\boldsymbol\Xi^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Откуда по теореме \ref{SSA_AMUSE_decomp} $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
 %	 Далее остаётся спроектировать траекторные матрицы на найденный базис и найти элементарные матрицы:
 %$
 %		\matr{Y}^{(i)}=\matr{Y}^{(i)}\matr{S}^{(i)}\bracket{\T{\bracket{\matr{S}^{(i)}}}\matr{S}^{(i)}}^{-1}\T{\bracket{\matr{S}^{(i)}}},
@@ -503,8 +509,11 @@ $
 
 \begin{proposition}
 \label{prop:sepSSAandAMUSE}
-Пусть $\tX^{(1)}$ и $\tX^{(2)}$ --- бесконечные ряды, управляемые ЛРФ порядка $d$. Если отрезки этих бесконечных рядов достаточно большой длины $N$ такой, что сдвиг $0 < \tau \leq \min \bracket{\lfloor\frac{L-d}{2}\rfloor, K-d, \lfloor\frac{K}{2}\rfloor}$, 
-слабо Basic SSA разделимы при длине окна $L$, то удлинённые на $\tau$ (то есть длины $N+\tau$) отрезки ряда будут слабо SSA-AMUSE разделимы при том же $L$ и сдвиге $\tau$. Также будут слабо SSA-AMUSE разделимы неудлинённые отрезки длины $N$ при длине окна $L-\tau$ и сдвиге $\tau$.
+Пусть $\tX^{(1)}_{N+\tau}$ и $\tX^{(2)}_{N+\tau}$ --- ряды, управляемые ЛРФ порядка $d < N/2$, при этом ряды $\tX^{(i)}_{N}$ из первых $N$ элементов $\tX^{(i)}_{N+\tau}$ слабо Basic SSA разделимы при длине окна $L$. И пусть $\tau,L,K=N-L+1$ и $d$ такие, что $\tau \leq \min \bracket{K/2, K\!-\!d, \bracket{L-d}\!/{2}}$. Тогда 
+\begin{enumerate}
+	\item $\tX^{(1)}_{N+\tau}$ и $\tX^{(2)}_{N+\tau}$ слабо SSA-AMUSE разделимы при том же $L$ и сдвиге $\tau$.
+	\item Если $\tau \leq \bracket{L-d}/3$, то $\tX^{(1)}_{N}$ и $\tX^{(2)}_{N}$ слабо SSA-AMUSE разделимы при длине окна $L-\tau$ и сдвиге $\tau$. 
+\end{enumerate}
 \end{proposition}
 
 \begin{remark}
@@ -547,7 +556,9 @@ $
 Конечно, в реальных задачах условия точной разделимости редко выполнены и имеет место приближённая разделимость,
 которая является следствием наличия асимптотической разделимости.
 
-Понятие асимптотической SSA-AMUSE слабой разделимости определяется аналогично асимптотической разделимости
+Пусть $\tX^{(i)}=\brackettt{x_1^{(i)},x_2^{(i)},\ldots},i=1,2$ --- бесконечные ряды, управляемые ЛРФ. Обозначим $\tX^{(i)}_N=\brackettt{x_1^{(i)},x_2^{(i)},\ldots,x_N^{(i)}}.$
+
+Понятие асимптотической SSA-AMUSE слабой разделимости рядов $\tX^{(1)}$ и $\tX^{(2)}$ определяется аналогично асимптотической разделимости
 в случае Basic SSA с помощью замены условия точной  ортогональности на асимптотическую при длине ряда $N$, стремящейся к бесконечности.
 При этом в случае SSA-AMUSE не требуется, чтобы $L$ также стремилось к бесконечности,
 и достаточно, чтобы только $K=N-L+1\rightarrow \infty$ при $N\rightarrow \infty$
@@ -559,12 +570,12 @@ $
 
 
 Отдельно остановимся на понятии асимптотической сильной разделимости.
-Условием сильной разделимости в SSA-AMUSE является дизъюнктность множеств собственных чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$, где $\matr{S}^{(K,i)}$ --- матрицы, чьи столбцы содержат базисы, найденные на шаге 3 алгоритма SSA-AMUSE.
+Условием сильной разделимости в SSA-AMUSE является дизъюнктность множеств собственных чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$, где $\matr{S}^{(K,i)}$ --- матрицы, чьи столбцы содержат базисы, найденные на шаге 3 алгоритма SSA-AMUSE, применённого к траекторным матрицам рядов $\tX^{(i)}_N$.
 Условием асимптотической сильной разделимости асимптотически слабо разделимых рядов назовём дизъюнктность множеств предельных собственных
 чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$ при $K\rightarrow\infty$, если такие пределы существуют.
 
 Метод SSA-AMUSE имеет преимущество и в асимптотической сильной разделимости.
-А именно, гармоники $\tX^{(1)}$ и $\tX^{(2)}$  с общими членами в виде $x^{(i)}_n\!=\!A_i\sin\! \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,\ldots,N$, являются асимптотически сильно разделимыми даже при совпадающих
+А именно, гармоники $\tX^{(1)}$ и $\tX^{(2)}$  с общими членами в виде $x^{(i)}_n\!=\!A_i\sin\! \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,\ldots$, являются асимптотически сильно разделимыми даже при совпадающих
 амплитудах при $K\rightarrow \infty$. Это доказывается непосредственным вычислением собственных чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$.%
 
 
@@ -580,7 +591,7 @@ $
 	%width = 0.3\textwidth, height=0.5\textheight
 	\includegraphics[scale=0.785]{figure1.eps}
 %	\captionsetup{labelformat=empty}
-	\caption{RMSE для оценки $\sin(2\pi/7)$ в сумме  $\sin(2\pi/7)+\sin(2\pi \omega_2)$ в зависимости от  $\omega_2$.}
+	\caption{RMSE для оценки $\tX^{(1)}_N$ в зависимости от  $\omega_2$.}
 \label{fig:comp}
 \efg
 
@@ -591,7 +602,7 @@ $
 является то, что получаемое разложение не является разложением на ортогональные по Фробениусу матрицы.
 
 Тем не менее, перечисленные преимущества приводят к повышению точности разделения компонент временного ряда.
-Продемонстрируем это на численном эксперименте. На рисунке \ref{fig:comp} изображены ошибки RMSE оценки одной гармонической компоненты по наблюдаемой сумме двух синусов. Параметр $\omega_2$ меняется от 0.01 до 0.25 с шагом 0.001. Длина ряда $N=150$, длина окна $L=75$, сдвиг $\tau=1$ и в DerivSSA параметр $\gamma=10$. Естественно, что при $\omega_2\approx \omega_1=1/7$ разделимости нет. Однако видно, что область с большой ошибкой вокруг $\omega_2=1/7\approx 0.14$  более узкая для SSA-AMUSE.
+Продемонстрируем это на численном эксперименте. Пусть $\tX_N=\tX^{(1)}_N+\tX^{(2)}_N$, где общий член $x^{(i)}_n\!=\sin\! \bracket{2\pi n \omega_i}$, $n=1,\ldots,N$. Параметр $\omega_1=1/7$, $\omega_2$ меняется от 0.01 до 0.25 с шагом 0.001, длина ряда $N=150$, длина окна $L=75$, сдвиг $\tau=1$ и в DerivSSA параметр $\gamma=10$. На рисунке \ref{fig:comp} изображены ошибки RMSE оценки одной гармонической компоненты по наблюдаемой сумме двух синусов. Естественно, что при $\omega_2\approx \omega_1=1/7$ разделимости нет. Однако видно, что область с большой ошибкой вокруг $\omega_2=1/7\approx 0.14$  более узкая для SSA-AMUSE.
 При добавлении шума к сигналу результат сравнения аналогичен.
 
 %\bibliographystyle{gost2008}
