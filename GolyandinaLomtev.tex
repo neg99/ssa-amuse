@@ -208,8 +208,6 @@ $
 \subsection{Ряды конечного ранга. ЛРФ}
 Дадим определение ряда конечного ранга и ряда, управляемого линейной рекуррентной формулой (ЛРФ) \cite[глава 5]{Golyandina.etal2001}.
 
-\marginpar{В \cite[глава 5]{Golyandina.etal2001} $L \geq d$ и $d \leq \min \bracket{L,K}$}
-
 \begin{definition}
 	Ряд $\tX_N$ называется рядом конечного ранга $d < N/2$, если его $L$-траекторная матрица имеет ранг $d$ при любом $L \geq d$ таком, что $d \leq \min \bracket{L,K}$.
 \end{definition}
@@ -241,11 +239,10 @@ $
 
 Таким образом, на первом этапе мы делаем обычное сингулярное разложение $L$-траекторной матрицы $\matr{X}$.
  Выделяем группу неразделившихся компонент с индексами $I$, $|I|=r$. Обозначим $\matr{Y}=\matr{X}_I$ сгруппированную матрицу этих компонент размерности $L \times K$ ранга $r$.
-\marginpar{Убрал столбцы $Y_k$. Они далее не встречаются} 
-  Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$. 
- После группировки согласно разбиению $I=\bigsqcup\limits_{k=1}^l J_k$ и диагонального усреднения, так же, как в Basic SSA, получаем разложение
+  Метод SSA-AMUSE строит разложение матрицы $\matr{Y}=\matr{Y}^{(1)}+\ldots+\matr{Y}^{(r)}$.
+ После группировки согласно разбиению $I=\bigsqcup\limits_{k=1}^l J_k$ и последующего диагонального усреднения так же, как в Basic SSA, получаем разложение
 $
-\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(l)}_N,\ \  \wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_{J_k}.
+\wtilde\tY_N = \wtilde\tY^{(1)}_N+\ldots+\wtilde\tY^{(l)}_N$, где $\wtilde\tY^{(k)}_N = \calT^{-1} \calH \matr{Y}_{J_k}.
 $
 
 В алгоритме SSA-AMUSE кроме параметра длины окна $L$ присутствует сдвиговый параметр $\tau \geq 1$. Мы будем описывать алгоритм с произвольным $\tau$. Однако, для получения сильной разделимости достаточно значения $\tau=1$.
@@ -258,10 +255,8 @@ $
 Положим
 	\begin{gather}
 	\label{C_tau}
-\matr{C}_{\tau}\brackettt{\matr{B}} = \left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right]\! \big/ 2\: \in \cM_{B,B}.
+\matr{C}_{\tau}\brackettt{\matr{B}} = 0.5 \left[\T{\bracket{\toptau{\matr{B}}}}\bottau{\matr{B}}+\T{\bracket{\bottau{\matr{B}}}}\toptau{\matr{B}}\right] \in \cM_{B,B}.
 	\end{gather}
-
-\marginpar{Наверное лучше привести все $\frac{x}{y}$ к виду $x/y$ для единого стиля}
 
 \subsection{Вспомогательные утверждения}
 \label{sec:support}
@@ -311,7 +306,7 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 
 \begin{theorem}
 \label{SSA_AMUSE_decomp}
-Пусть $\matr{Y}, \matr{Q}, \matr{\Lambda}, \matr{U}, r$ определены в лемме \ref{svd_YY_} и $\tau\! \leq\! K/2$, а $\matr{W}$ и $\matr{S}=[S_1:\ldots:S_r]$ определены в лемме \ref{C_S_diag}. Тогда $\matr{Y}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
+Пусть $\matr{Y}$, $\matr{Q}$, $\matr{\Lambda}$, $\matr{U}$ и $r$ определены в лемме \ref{svd_YY_} и сдвиг $\tau\! \leq\! K/2$, а $\matr{W}$ и $\matr{S}=[S_1:\ldots:S_r]$ определены в лемме \ref{C_S_diag}. Тогда имеет место разложение $\matr{Y}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
 %, $\matr{W}$ из спектрального разложения $\matr{C}_{\tau}\brackettt{\matr{Q}}=\matr{W}\matr{D}\T{\matr{W}}$, $\matr{Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}$, $\matr{U}$ --- левые сингулярные векторы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$
 \end{theorem}
 \begin{proof}
@@ -464,7 +459,7 @@ $
 как при доказательстве необходимости).
 Отсюда можно вывести, что столбцы матрицы $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)}\right]$ образуют базис $\gX^{(K)}$.	
 	Из условия \eqref{eq:wsep2} следует, что матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$
-	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\boldsymbol\Xi^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Откуда по теореме \ref{SSA_AMUSE_decomp} $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
+	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\boldsymbol\Xi^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{\bracket{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Откуда по теореме \ref{SSA_AMUSE_decomp} $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
 %	 Далее остаётся спроектировать траекторные матрицы на найденный базис и найти элементарные матрицы:
 %$
 %		\matr{Y}^{(i)}=\matr{Y}^{(i)}\matr{S}^{(i)}\bracket{\T{\bracket{\matr{S}^{(i)}}}\matr{S}^{(i)}}^{-1}\T{\bracket{\matr{S}^{(i)}}},
@@ -484,7 +479,7 @@ $
 			\begin{gather}	
 \label{eq:QQ}	
 				\left[\lefttau{\matr{Y}^{(i)}}:\righttau{\matr{Y}^{(i)}}\right]=
-    				\matr{U}^{(i)}\bracket{\matr{\Lambda}^{(i)}}^{1/2}\left[\T{\bracket{\toptau{\bracket{\matr{\Q}^{(i)}}}}}:\T{\bracket{\bottau{\bracket{\matr{\Q}^{(i)}}}}}\right], i=1,2,
+    				\matr{U}^{(i)}\bracket{\matr{\Lambda}^{(i)}}^{1/2}\left[\T{\bracket{\toptau{{\matr{\Q}^{(i)}}}}}:\T{\bracket{\bottau{{\matr{\Q}^{(i)}}}}}\right], i=1,2,
     		\end{gather}
 как в лемме \ref{svd_YY_}.
 
@@ -509,10 +504,10 @@ $
 
 \begin{proposition}
 \label{prop:sepSSAandAMUSE}
-Пусть $\tX^{(1)}_{N+\tau}$ и $\tX^{(2)}_{N+\tau}$ --- ряды, управляемые ЛРФ порядка $d < N/2$, при этом ряды $\tX^{(i)}_{N}$ из первых $N$ элементов $\tX^{(i)}_{N+\tau}$ слабо Basic SSA разделимы при длине окна $L$. И пусть $\tau,L,K=N-L+1$ и $d$ такие, что $\tau \leq \min \bracket{K/2, K\!-\!d, \bracket{L-d}\!/{2}}$. Тогда 
+Пусть $\tX^{(1)}_{N+\tau}$ и $\tX^{(2)}_{N+\tau}$ --- ряды длины $N+\tau$, управляемые ЛРФ порядка $d < N/2$, при этом ряды $\tX^{(i)}_{N}$ из первых $N$ элементов $\tX^{(i)}_{N+\tau}$ слабо Basic SSA разделимы при длине окна $L$. Пусть также $\tau$, $L$, $K=N-L+1$ и $d$ такие, что $\tau \leq \min \bracket{K/2, K\!-\!d, \bracket{L-d}\!/{2}}$. Тогда
 \begin{enumerate}
 	\item $\tX^{(1)}_{N+\tau}$ и $\tX^{(2)}_{N+\tau}$ слабо SSA-AMUSE разделимы при том же $L$ и сдвиге $\tau$.
-	\item Если $\tau \leq \bracket{L-d}/3$, то $\tX^{(1)}_{N}$ и $\tX^{(2)}_{N}$ слабо SSA-AMUSE разделимы при длине окна $L-\tau$ и сдвиге $\tau$. 
+	\item Если $\tau \leq \bracket{L-d}/3$, то $\tX^{(1)}_{N}$ и $\tX^{(2)}_{N}$ слабо SSA-AMUSE разделимы при длине окна $L-\tau$ и сдвиге $\tau$.
 \end{enumerate}
 \end{proposition}
 
@@ -556,7 +551,7 @@ $
 Конечно, в реальных задачах условия точной разделимости редко выполнены и имеет место приближённая разделимость,
 которая является следствием наличия асимптотической разделимости.
 
-Пусть $\tX^{(i)}=\brackettt{x_1^{(i)},x_2^{(i)},\ldots},i=1,2$ --- бесконечные ряды, управляемые ЛРФ. Обозначим $\tX^{(i)}_N=\brackettt{x_1^{(i)},x_2^{(i)},\ldots,x_N^{(i)}}.$
+Пусть $\tX^{(i)}=\brackettt{x_1^{(i)},x_2^{(i)},\ldots}$, $i=1,2$, --- бесконечные ряды, управляемые ЛРФ. Обозначим $\tX^{(i)}_N=\brackettt{x_1^{(i)},x_2^{(i)},\ldots,x_N^{(i)}}.$
 
 Понятие асимптотической SSA-AMUSE слабой разделимости рядов $\tX^{(1)}$ и $\tX^{(2)}$ определяется аналогично асимптотической разделимости
 в случае Basic SSA с помощью замены условия точной  ортогональности на асимптотическую при длине ряда $N$, стремящейся к бесконечности.
@@ -574,8 +569,8 @@ $
 Условием асимптотической сильной разделимости асимптотически слабо разделимых рядов назовём дизъюнктность множеств предельных собственных
 чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$ при $K\rightarrow\infty$, если такие пределы существуют.
 
-Метод SSA-AMUSE имеет преимущество и в асимптотической сильной разделимости.
-А именно, гармоники $\tX^{(1)}$ и $\tX^{(2)}$  с общими членами в виде $x^{(i)}_n\!=\!A_i\sin\! \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,\ldots$, являются асимптотически сильно разделимыми даже при совпадающих
+Метод SSA-AMUSE ослабляет условия метода Basic SSA и для асимптотической сильной разделимости.
+А именно, гармоники $\tX^{(1)}$ и $\tX^{(2)}$  с общими членами в виде $x^{(i)}_n\!=\!A_i\sin\! \bracket{2\pi n \omega_i + \gamma_i}$, $n=1,2,\ldots$, являются асимптотически сильно разделимыми даже при совпадающих
 амплитудах при $K\rightarrow \infty$. Это доказывается непосредственным вычислением собственных чисел матриц $\matr{C}_{\tau}\brackettt{\matr{S}^{(K,i)}}$.%
 
 
