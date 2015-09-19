@@ -24,6 +24,7 @@
 \def\matr{\mathbf}
 \def\func{\mathop\mathrm}
 \def\ED{\mathbb}
+%\def\trans{\mathop{\mathrm{T}}}
 \def\trans{{\mathrm{T}}}
 \newcommand{\T}[1]{#1^{\mathop{\mathrm{T}}}}
 \newcommand{\normP}[1]{\left\| #1 \right\|_{P}}
@@ -67,8 +68,10 @@
 \titlespacing{\subsubsection}{0pt}{*1}{*0}
 
 
+%\input{letters_series_mathbb}
 % Использовать полужирное начертание для векторов
 \let\vec=\mathbf
+%\renewcommand{\cdsep}{\\}
 \newcommand{\secondskip}{3.5cm}
 \newcommand{\sixthskip}{2.5cm}
 \renewcommand{\hat}[1]{\widehat{#1}}
@@ -76,6 +79,7 @@
 % Включать подсекции в оглавление
 \setcounter{tocdepth}{2}
 
+%\graphicspath{{fig/}}
 %----------------------------------------------------------------
 \begin{document}
     \begin{center}
@@ -83,6 +87,14 @@
       {Голяндина Н.Э.\footnote{Работа частично поддержана грантом РФФИ номер 15-04-06480}, Ломтев М.А.}\\[0.4cm]
       УДК 519.246.8+519.254
     \end{center}
+
+%\begin{abstract}
+%Рассматривается модификация SSA-AMUSE метода анализа сингулярного спектра для улучшения разделимости компонент временного ряда.
+%Предлагаемая модификация ослабляет условия так называемой сильной разделимости, приводя к улучшению точности разделения компонент
+%по сравнению с аналогичным методом. В работе приведено обоснование алгоритма, а также получены условия разделимости
+%для нового метода. Применение условий разделимости продемонстрировано для случая разделимости двух гармоник.
+%На численном примере показано преимущество разработанного метода по сравнению с существующим.
+%\end{abstract}
 
 \section*{Введение}
 В анализе временных рядов есть важная задача представления наблюдаемого ряда в виде
@@ -119,6 +131,7 @@ $\tX^{(1)}$, а вторая --- $\tX^{(2)}$. Сильная разделимость означает, что для лю
 
 \section{Метод Basic SSA}
 \label{SSA}
+%В \cite{Golyandina2001} приводится базовый алгоритм SSA, состоящий из следующих шагов: вложение, сингулярное разложение траекторной матрицы, группировка, диагональное усреднение.
 Рассмотрим вещественнозначный ненулевой временной ряд $\tX_N\!=\!(x_1,\ldots,x_{N})$. Пусть $L$ ($1<L<N$) --- целое число, называемое {\em длиной окна}, и $K=N-L+1$.
 
 Обозначим  $\cM_{L,K}$ линейное пространство матриц размера $L\times K$,
@@ -277,7 +290,9 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 	Следует из $\matr{Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}$ и замечания \ref{uut}.
 \end{proof}
 
+%\begin{remark}
 	Заметим, что столбцы матрицы $\matr{\Q}$ не являются ортогональными и нормированными.
+%\end{remark}
 
 \begin{lemma}
 	Пусть матрица $\matr{Q} \in \cM_{K,r}$, и $\matr{C}_{\tau}\brackettt{\matr{Q}}=\matr{W}\matr{D}\T{\matr{W}}$ --- некоторое спектральное разложение $\matr{C}_{\tau}\brackettt{\matr{Q}}$. Тогда $\matr{D}=\matr{C}_{\tau}\brackettt{\matr{S}}$, где $\matr{S}=\matr{Q}\matr{W}$, и, следовательно, $\matr{C}_{\tau}\brackettt{\matr{S}}$ --- диагональная матрица.
@@ -292,10 +307,15 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 \begin{theorem}
 \label{SSA_AMUSE_decomp}
 Пусть $\matr{Y}$, $\matr{Q}$, $\matr{\Lambda}$, $\matr{U}$ и $r$ определены в лемме \ref{svd_YY_} и сдвиг $\tau\! \leq\! K/2$, а $\matr{W}$ и $\matr{S}=[S_1:\ldots:S_r]$ определены в лемме \ref{C_S_diag}. Тогда имеет место разложение $\matr{Y}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
+%, $\matr{W}$ из спектрального разложения $\matr{C}_{\tau}\brackettt{\matr{Q}}=\matr{W}\matr{D}\T{\matr{W}}$, $\matr{Q}=\T{\matr{Y}}\matr{U}\matr{\Lambda}^{-1/2}$, $\matr{U}$ --- левые сингулярные векторы $\left[\lefttau{\matr{Y}}:\righttau{\matr{Y}}\right]$
 \end{theorem}
 \begin{proof}
 	По следствию \ref{Y_ULQ} и лемме \ref{C_S_diag} $\matr{Y}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}\T{\matr{S}}=\hat{\matr{U}}\T{\matr{S}}=\sum\limits_{i=1}^{r}\hat{U}_i \T{S}_i$, где $\hat{U}_i$ --- столбцы матрицы $\hat{\matr{U}}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}$.
 \end{proof}
+%\begin{remark}
+%\label{SSA_AMUSE_decomp_note}
+%	$\hat{U}_i=\matr{U}\matr{\Lambda}^{1/2}W_i$, где $W_i$ являются столбцами матрицы $\matr{W}$.
+%\end{remark}
 
 \subsection{Алгоритм}
 \label{SSA_ICA_alg}
@@ -303,6 +323,8 @@ $\matr{U}\in \cM_{L,r}$ --- матрица левых сингулярных векторов, и $\matr{T}\in \
 
 Как уже говорилось, алгоритм SSA-AMUSE строит разложение некоторой сгруппированной матрицы $\matr{Y}=\matr{X}_I$, которая была
 получена на шаге Разложение метода Basic SSA и которая является приближением ранга $r$ траекторной матрицей ряда $\wtilde\tY_N = \calT^{-1} \calH \matr{Y}$. Алгоритм устроен следующим образом.
+
+
 
 \medskip
 \textbf{Алгоритм SSA-AMUSE}
@@ -335,15 +357,21 @@ $
 \label{SSA_ICA_separ}
 
 Далее будем считать, что матрица $\matr{Y}=\matr{X}_I$ в алгоритме SSA-AMUSE является траекторной матрицей $\matr{X}$ исходного ряда $\tX_N$, соответственно $r=d$, $I=\left\{ 1,\ldots, r \right\}$.
+%для удобства изложения будем предполагать в этом разделе, что траекторная матрица $\matr{X}$ ряда $\tX_N$
+%имеет ранг $d$. В качестве групп индексов $I$ в алгоритмах будем брать номера
+%ненулевых сингулярных чисел сингулярного разложения траекторной матрицы. Соответственно, сгруппированная
+%матрица $\matr{Y}=\matr{X}_I=\matr{X}$ и имеет ранг $r=d$.
 В общем случае, группа $I$ может соответствовать компоненте ряда,
 сильно отделимой от остатка.
 
+%\subsection{Свойства подпространств}
 \subsection{Вспомогательные утверждения}
 \label{SSA_ICA_prop}
 Будем рассматривать ряды $\tX_N$, $\tX_N^{(1)}$ и $\tX_N^{(2)}$ конечного ранга, управляемые ЛРФ порядка $d$, $d_1$ и $d_2$ соответственно, и пространства строк $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ их траекторных матриц $\matr{X}$, $\matr{X}^{(1)}$ и $\matr{X}^{(2)}$.
 Предположим, что  $\tX_N=\tX_N^{(1)}+\tX_N^{(2)}$ и $d=d_1+d_2$.
 Докажем несколько утверждений о свойствах траекторных пространств.
 
+%Как и раньше,  пусть $\gX^{(K,1)},\gX^{(K,2)}$ и $\gX^{(K)}$ --- пространства строк траекторных матриц рядов $\tX_N^{(1)}$, $\tX_N^{(2)}$ и $\tX_N$ %размерности, соответственно, $d_1$, $d_2$ и $d$.
  Обозначим $\righttau{{\gX}^{(K,1)}},\:\righttau{{\gX}^{(K,2)}}$ и $\righttau{{\gX}^{(K)}}$ --- пространства строк матриц $\righttau{\matr{X}}$, $\righttau{\matr{X}^{(1)}}$ и $\righttau{\matr{X}^{(2)}}$, и также $\lefttau{{\gX}^{(K,1)}}$, $\lefttau{{\gX}^{(K,2)}}$ и $\lefttau{{\gX}^{(K)}}$ --- пространства строк матриц $\lefttau{\matr{X}}$, $\lefttau{\matr{X}^{(1)}}$ и $\lefttau{\matr{X}^{(2)}}$.
 
 \begin{lemma}
@@ -414,6 +442,7 @@ $
 %	
 	Используя определение~\ref{def:sep_w} разделимости,
 	 можно показать, что матрица $\matr{P}^{(i)}\!=\!\matr{U}\!\matr{\Lambda}^{1/2}\matr{W}^{(i)}\!\T{\bracket{\!\matr{W}^{(i)}\!}}\!\!\matr{\Lambda}^{-1/2}\T{\matr{U}}$ задает ортогональный проектор на пространство столбцов матрицы $\matr{Y}^{(i)}$.
+%и поэтому $\matr{Y}^{(i)}=\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{P}^{(i)}\matr{Y}=\matr{P}^{(i)}\matr{Y}^{(i)}$.
 	Воспользовавшись этим, выведем второе условие из диагональности матрицы $\matr{C}_{\tau}\brackettt{\matr{S}}$. Матрица может быть записана в виде
 	\begin{eqnarray*}
 		\matr{C}_{\tau}\brackettt{\matr{S}} = \left(\begin{array}{cc}
@@ -430,7 +459,12 @@ $
 как при доказательстве необходимости).
 Отсюда можно вывести, что столбцы матрицы $\matr{S}=\left[ \matr{S}^{(1)}: \matr{S}^{(2)}\right]$ образуют базис $\gX^{(K)}$.	
 	Из условия \eqref{eq:wsep2} следует, что матрица $\matr{C}_{\tau}\brackettt{\matr{S}}$
-	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\boldsymbol\Xi^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{\bracket{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Откуда по теореме \ref{SSA_AMUSE_decomp} $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
+	 диагональна. Далее рассмотрим выражения $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]\boldsymbol\Xi^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Заменим $\left[\!\lefttau{{\matr{Y}}}:\righttau{{\matr{Y}}}\!\right]$ на сингулярное разложение $\matr{U}\matr{\Lambda}^{1/2}\left[\T{\bracket{\toptau{\matr{Q}}}}:\T{\bracket{\bottau{\matr{Q}}}}\right]$, при этом $\matr{Q}=\matr{S}\T{\matr{W}}$ для некоторой ортогональной матрицы $\matr{W}=\left[ \matr{W}^{(1)}:\matr{W}^{(2)} \right]$, $\matr{S}^{(i)}=\matr{Q}\matr{W}^{(i)}$. После подстановки можно вывести $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Но $\matr{Y}^{(i)}\!=\!\matr{A}^{(i)}\!\T{\bracket{\matr{S}^{(i)}}}$ для некоторой матрицы $\matr{A}^{(i)}$ (так как столбцы $\matr{S}^{(i)}$ --- базис строк $\matr{Y}^{(i)}$), и $\left[\!\lefttau{{\matr{Y}}^{(i)}}:\righttau{{\matr{Y}}^{(i)}}\!\right]\!=\!\matr{A}^{(i)}\T{\bracket{\boldsymbol\Xi^{(i)}}}$. Откуда $\matr{A}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}$ и $\matr{Y}^{(i)}=\matr{U}\matr{\Lambda}^{1/2}\matr{W}^{(i)}\T{\bracket{\matr{S}^{(i)}}}$.
+%	 Далее остаётся спроектировать траекторные матрицы на найденный базис и найти элементарные матрицы:
+%$
+%		\matr{Y}^{(i)}=\matr{Y}^{(i)}\matr{S}^{(i)}\bracket{\T{\bracket{\matr{S}^{(i)}}}\matr{S}^{(i)}}^{-1}\T{\bracket{\matr{S}^{(i)}}},
+%$
+%что и означает разделимость.
 \end{proof}
 
 \begin{consequence}
@@ -456,6 +490,7 @@ $
 Тогда сильная SSA-AMUSE разделимость равносильна тому, что множества
  собственных чисел матриц $\matr{C}_{\tau}\brackettt{\matr{Q}^{(1)}}$ и $\matr{C}_{\tau}\brackettt{\matr{Q}^{(2)}}$
 не пересекаются.
+%	\end{itemize}
 \end{theorem}
 \begin{proof}
 Доказательство теоремы основывается на лемме \ref{one_tau_deter_cons}, в силу которой компоненты разложения,
@@ -546,8 +581,11 @@ $
 У методов много общего. В частности, они оба являются вложенными, т.е. используются уже после выделения сигнала из шума.
 
 \bfgh
+%\label{fig:comp}
 	\centering
+	%width = 0.3\textwidth, height=0.5\textheight
 	\includegraphics[scale=0.785]{figure1.eps}
+%	\captionsetup{labelformat=empty}
 	\caption{RMSE для оценки $\tX^{(1)}_N$ в зависимости от  $\omega_2$.}
 \label{fig:comp}
 \efg
